@@ -3,15 +3,20 @@
 // functions
 // event listeners
 
-
+// -------------------------------------------- GLOBAL VARIABLES
 var wins = 0;
 var loses = 0;
 var userChoices = "";
 var round = 0;
+
+var time = 30;
+var timerHandle;
+var running = false;
+
 var hideMe = document.getElementById("hideMeBaby");
 var hideTheButton = document.getElementById("hideButton");
 
-
+// -------------------------------------------- QUESTIONS OBJECT
 var questionsLib = [
         {
             question: "What's the best soccer team in Spain?",
@@ -59,24 +64,26 @@ var questionsLib = [
 ];
 
 
-
+// -------------------------------------------- START BUTTON
 function hideAndShowBtn() {
-console.log(hideMe.style.display)
-if (hideMe.style.display == "none") {
-    hideMe.style.display = "none"; // show
-} else {
-    hideMe.style.display = "block"; // hide
-}
-console.log("round: " + round);
-hideTheButton.style.display = "none";
-run();
+    console.log(hideMe.style.display)
+    if (hideMe.style.display == "none") {
+        hideMe.style.display = "none"; // show
+    } else {
+        hideMe.style.display = "block"; // hide
+    }
+    console.log("round: " + round);
+    hideTheButton.style.display = "none";
+    myTimer();
+    run();
 }
 
 
-// document.getElementById("answer").innerText = "Real Madrid"
+// -------------------------------------------- RUN
 function run() {
     console.log("inside round: " + round)
     
+    // --------- GAME OVER
     if (round === 4) {
         hideMe.style.display = "none";
         gameOver.style.display = "block";
@@ -84,21 +91,23 @@ function run() {
         var scoreScreen = "You won: " + wins + " times, and lost: " + loses + " times.";
         document.getElementById("gameOver").innerHTML = scoreScreen + "<br> You chose: " + userChoices + "<br> Right answers -> Q1: Real Madrid, Q2: France, Q3: 1930, Q4: Uruguay.";
     }
+    // --------- PLAY
     else {
         var question = questionsLib[round].question;
-        document.getElementById("question").innerHTML = question;
+        document.getElementById("question").innerHTML = question; // --- DISPLAY QUESTION
 
+        // -------- OPTIONS
         for (var i = 0; i < questionsLib[round].choices.length; i++) {
             var choices = questionsLib[round].choices[i];
             document.getElementById("option" + i).innerHTML = "<br>" + choices;
         }
     }
-
 }
-
-
+ 
+// -------------------------------------------- CHOOSE OPTIONS:
 $(document).on("click", ".chooseMe", function () {
-    console.log("round at chose option: " + round);
+
+    
 
     var userGuess = $($(this).children()[0]).text(); // gets the html text inside button
 
@@ -119,10 +128,36 @@ $(document).on("click", ".chooseMe", function () {
 })
 
 
+// ======---------------------------------------> TIMER
+function start() {
+    if (!running) {
+        timerHandle = setInterval(decrement, 1000);
+        running = true;
+    }
+}
+
+function decrement() {
+    time--;
+    console.log(time);
+    if (time <= 0) {
+        stop();
+        // or do something else 
+    }
+}
+
+function stop() {
+    clearInterval(timerHandle);
+    running = false;
+}
+
+function reset() {
+    time = 30;
+}
 
 
 
 
+// _________________________________________ PROGRAM DESIGN: 
 
 // __________________________________________ TIMER:
 // when 'start' button clicked, display 30 sec timer
@@ -141,7 +176,6 @@ $(document).on("click", ".chooseMe", function () {
 // on.button 'start'.click displayQuestions()
 
 // on option clicked, check if option matches answer -> add right or wrong to score, display win or lose screen.
-
 
 // __________________________________________ FINAL SCORE:
 // wins = 0
