@@ -11,15 +11,20 @@
 var wins = 0;
 var loses = 0;
 var round = 0;
+var hideMe = document.getElementById("hideMeBaby");
+
+
+$(document).on("click", ".chooseMe", function () {
+    var userGuess = $($(this).children()[0]).text();
+})
 
 
 function hideAndShowBtn() {
-    var hideMe = document.getElementById("hideMeBaby");
     if (hideMe.style.display === "none") {
         hideMe.style.display = "none"; // show
     } else {
         hideMe.style.display = "block"; // hide
-    }
+    } 
 }
 
 
@@ -38,9 +43,9 @@ var questionsLib = [
         {
             question: 'Who won the 2018 Worldcup?',
             choices: [
-                'Russia', 
+                'France', 
                 'Croatia', 
-                'France'
+                'Russia'
             ],
             answer: 'France',
             questionNum: 2
@@ -49,9 +54,9 @@ var questionsLib = [
         {
             question: "When was the first Worldcup ever?",
             choices: [
-                '1898', 
+                '1930', 
                 '1970', 
-                '1930'
+                '1948'
             ],
             answer: '1930',
             question: 3
@@ -71,19 +76,44 @@ var questionsLib = [
 
 
 
-var question = questionsLib[0].question;
-document.getElementById("question").innerHTML = question;
+// document.getElementById("answer").innerText = "Real Madrid";
+
+run();
+function run() {
+    var question = questionsLib[round].question;
+    document.getElementById("question").innerHTML = question;
+
+    for (var i = 0; i < questionsLib[round].choices.length; i++) {
+        var choices = questionsLib[round].choices[i];
+        document.getElementById("option" + i).innerHTML = "<br>" + choices;
+    }
+
+    if (round === 4) {
+        hideMe.style.display = "none";
+        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + "times.";
+        document.getElementById("gameOver").innerHTML = scoreScreen;
+    }
 
 
-for (var i = 0; i < questionsLib[round].choices.length; i++) {
-    var choices = questionsLib[round].choices[i];
-    document.getElementById("option" + i).innerHTML = "<br>" + choices;
+    $("#chooseMe").click(function () {
+        wins++;
+        document.getElementById("answer").innerText = "Real Madrid";
+        // run();
+        console.log($(this).data("id"))
+        // console.log($(this).attr("id"));
+    });
+
+    $("#option1").click(function () {
+        loses++;
+        run();
+    });
+    $("#option2").click(function () {
+        loses++;
+        run();
+    });
+
+    round++;
 }
-
-$(".chooseMe").click(function () {
-    console.log(this)
-    console.log(this.elementById)
-});
 
 
  
@@ -114,7 +144,7 @@ $(".chooseMe").click(function () {
 // __________________________________________ QUESTIONS:
 // displayQuestions() -> display question 1 of the question's array
 
-// displayAnswers()
+// displayAnswers(
 
 // __________________________________________ ANSWERS:
 // displayChosenAnswer(chosenAnswer) - > 'you chose: ' + chosenAnswer
