@@ -6,7 +6,6 @@
 // functions
 // event listeners
 
-// var currentIndex = -1;
 
 var wins = 0;
 var loses = 0;
@@ -14,9 +13,6 @@ var round = 0;
 var hideMe = document.getElementById("hideMeBaby");
 
 
-$(document).on("click", ".chooseMe", function () {
-    var userGuess = $($(this).children()[0]).text();
-})
 
 
 function hideAndShowBtn() {
@@ -24,7 +20,8 @@ function hideAndShowBtn() {
         hideMe.style.display = "none"; // show
     } else {
         hideMe.style.display = "block"; // hide
-    } 
+    }
+    run();
 }
 
 
@@ -75,11 +72,40 @@ var questionsLib = [
 ];
 
 
+$(document).on("click", ".chooseMe", function () {
+    var userGuess = $($(this).children()[0]).text(); // gets the html text inside button
+    console.log(userGuess);
 
-// document.getElementById("answer").innerText = "Real Madrid";
+    console.log(round)
+    console.log("this is question lib round: " + questionsLib[round])
 
-run();
+    console.log(questionsLib[round].answer)
+
+    if (userGuess === questionsLib[round].answer) {
+        wins++;
+    }
+    else {
+        loses++;
+    }
+    // showAnswer();
+    run();
+    // console.log($(this).data("id"))
+    // console.log($(this).attr("id"));
+})
+
+// function showAnswer() {
+
+// }
+
+
+// document.getElementById("answer").innerText = "Real Madrid"
 function run() {
+    if (round === 4) {
+        hideMe.style.display = "none";
+        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + "times.";
+        document.getElementById("gameOver").innerHTML = scoreScreen;
+    }
+
     var question = questionsLib[round].question;
     document.getElementById("question").innerHTML = question;
 
@@ -87,31 +113,6 @@ function run() {
         var choices = questionsLib[round].choices[i];
         document.getElementById("option" + i).innerHTML = "<br>" + choices;
     }
-
-    if (round === 4) {
-        hideMe.style.display = "none";
-        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + "times.";
-        document.getElementById("gameOver").innerHTML = scoreScreen;
-    }
-
-
-    $("#chooseMe").click(function () {
-        wins++;
-        document.getElementById("answer").innerText = "Real Madrid";
-        // run();
-        console.log($(this).data("id"))
-        // console.log($(this).attr("id"));
-    });
-
-    $("#option1").click(function () {
-        loses++;
-        run();
-    });
-    $("#option2").click(function () {
-        loses++;
-        run();
-    });
-
     round++;
 }
 
