@@ -74,7 +74,7 @@ function hideAndShowBtn() {
     }
     console.log("round: " + round);
     hideTheButton.style.display = "none";
-    myTimer();
+    // startTimer();
     run();
 }
 
@@ -107,7 +107,7 @@ function run() {
 // -------------------------------------------- CHOOSE OPTIONS:
 $(document).on("click", ".chooseMe", function () {
 
-    
+    // startTimer();
 
     var userGuess = $($(this).children()[0]).text(); // gets the html text inside button
 
@@ -129,30 +129,30 @@ $(document).on("click", ".chooseMe", function () {
 
 
 // ======---------------------------------------> TIMER
-function start() {
-    if (!running) {
-        timerHandle = setInterval(decrement, 1000);
-        running = true;
-    }
-}
+// function startTimer() {
+//     if (!running) {
+//         timerHandle = setInterval(decrement, 1000);
+//         running = true;
+//     }
+// }
 
-function decrement() {
-    time--;
-    console.log(time);
-    if (time <= 0) {
-        stop();
-        // or do something else 
-    }
-}
+// function decrement() {
+//     time--;
+//     console.log(time);
+//     if (time <= 0) {
+//         stop();
+//         // or do something else 
+//     }
+// }
 
-function stop() {
-    clearInterval(timerHandle);
-    running = false;
-}
+// function stop() {
+//     clearInterval(timerHandle);
+//     running = false;
+// }
 
-function reset() {
-    time = 30;
-}
+// function reset() {
+//     time = 30;
+// }
 
 
 
@@ -160,7 +160,7 @@ function reset() {
 // _________________________________________ PROGRAM DESIGN: 
 
 // __________________________________________ TIMER:
-// when 'start' button clicked, display 30 sec timer
+// when 'startTimer' button clicked, display 30 sec timer
 
 // when 30 sec timer ends, if wrong answer selected or nothing selected, loses++, display you lost and the right answer
 // __________________________________________ QUESTIONS:
@@ -173,7 +173,7 @@ function reset() {
 // displayRightAnswer(rightAnswer) - > 'right answer: ' + rightAnswer
 
 // __________________________________________ USER:
-// on.button 'start'.click displayQuestions()
+// on.button 'startTimer'.click displayQuestions()
 
 // on option clicked, check if option matches answer -> add right or wrong to score, display win or lose screen.
 
