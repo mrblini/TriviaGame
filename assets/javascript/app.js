@@ -13,18 +13,6 @@ var round = 0;
 var hideMe = document.getElementById("hideMeBaby");
 
 
-
-
-function hideAndShowBtn() {
-    if (hideMe.style.display === "none") {
-        hideMe.style.display = "none"; // show
-    } else {
-        hideMe.style.display = "block"; // hide
-    }
-    run();
-}
-
-
 var questionsLib = [
         {
             question: "What's the best soccer team in Spain?",
@@ -72,14 +60,48 @@ var questionsLib = [
 ];
 
 
+
+function hideAndShowBtn() {
+console.log(hideMe.style.display)
+if (hideMe.style.display == "none") {
+    hideMe.style.display = "none"; // show
+} else {
+    hideMe.style.display = "block"; // hide
+}
+console.log("round: " + round);
+run();
+}
+
+
+// document.getElementById("answer").innerText = "Real Madrid"
+function run() {
+    console.log("inside round: " + round)
+    
+    if (round === 4) {
+        hideMe.style.display = "none";
+        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + " times.";
+        gameOver.style.display = "block";
+        document.getElementById("gameOver").innerHTML = scoreScreen;
+    }
+    else {
+        var question = questionsLib[round].question;
+        document.getElementById("question").innerHTML = question;
+
+        for (var i = 0; i < questionsLib[round].choices.length; i++) {
+            var choices = questionsLib[round].choices[i];
+            document.getElementById("option" + i).innerHTML = "<br>" + choices;
+        }
+    }
+
+}
+
+
 $(document).on("click", ".chooseMe", function () {
+    console.log("round at chose option: " + round);
+
     var userGuess = $($(this).children()[0]).text(); // gets the html text inside button
-    console.log(userGuess);
 
-    console.log(round)
-    console.log("this is question lib round: " + questionsLib[round])
-
-    console.log(questionsLib[round].answer)
+    console.log("answer: " + questionsLib[round].answer)
 
     if (userGuess === questionsLib[round].answer) {
         wins++;
@@ -87,52 +109,13 @@ $(document).on("click", ".chooseMe", function () {
     else {
         loses++;
     }
-    // showAnswer();
+    round++;
     run();
     // console.log($(this).data("id"))
     // console.log($(this).attr("id"));
 })
 
-// function showAnswer() {
 
-// }
-
-
-// document.getElementById("answer").innerText = "Real Madrid"
-function run() {
-    if (round === 4) {
-        hideMe.style.display = "none";
-        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + "times.";
-        document.getElementById("gameOver").innerHTML = scoreScreen;
-    }
-
-    var question = questionsLib[round].question;
-    document.getElementById("question").innerHTML = question;
-
-    for (var i = 0; i < questionsLib[round].choices.length; i++) {
-        var choices = questionsLib[round].choices[i];
-        document.getElementById("option" + i).innerHTML = "<br>" + choices;
-    }
-    round++;
-}
-
-
- 
-// function displayQuestions(currentIndex) {
-//     //Clear whatever is in inner-container
-//     console.log(questionsLib[i].question);
-//     var currentQuestion = examples[currentIndex + 1];
-
-//     if (currentQuestion){
-//         //Inside here we know we are not out of bounds on the array
-//         //We woudl want to now render our question template of html
-//     }
-// }
-
-
-// $('#start').on('click', function(){
-//     displayQuestions();
-// });
 
 
 
@@ -161,25 +144,3 @@ function run() {
 // wins = 0
 // loses = 0
 // displayFinalScore()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
