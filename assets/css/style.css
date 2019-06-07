@@ -57,4 +57,5 @@ body {
 
 #gameOver {
     display: none;
+    width:60vw;
 }

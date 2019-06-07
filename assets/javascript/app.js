@@ -1,6 +1,3 @@
-//We need a click handler for the start button
-//We need an array of quesitons which should be objects with properties related tot he questions
-//We need a function that we can pass one question object to and it will render that in our view
 
 // global var
 // functions
@@ -9,8 +6,10 @@
 
 var wins = 0;
 var loses = 0;
+var userChoices = "";
 var round = 0;
 var hideMe = document.getElementById("hideMeBaby");
+var hideTheButton = document.getElementById("hideButton");
 
 
 var questionsLib = [
@@ -44,7 +43,7 @@ var questionsLib = [
                 '1948'
             ],
             answer: '1930',
-            question: 3
+            questionNum: 3
         },
 
         {
@@ -55,7 +54,7 @@ var questionsLib = [
                 'Brazil'
             ],
             answer: 'Uruguay',
-            question: 4
+            questionNum: 4
         }
 ];
 
@@ -69,6 +68,7 @@ if (hideMe.style.display == "none") {
     hideMe.style.display = "block"; // hide
 }
 console.log("round: " + round);
+hideTheButton.style.display = "none";
 run();
 }
 
@@ -79,9 +79,10 @@ function run() {
     
     if (round === 4) {
         hideMe.style.display = "none";
-        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + " times.";
         gameOver.style.display = "block";
-        document.getElementById("gameOver").innerHTML = scoreScreen;
+
+        var scoreScreen = "You won: " + wins + " times, and lost: " + loses + " times.";
+        document.getElementById("gameOver").innerHTML = scoreScreen + "<br> You chose: " + userChoices + "<br> Right answers -> Q1: Real Madrid, Q2: France, Q3: 1930, Q4: Uruguay.";
     }
     else {
         var question = questionsLib[round].question;
@@ -100,6 +101,8 @@ $(document).on("click", ".chooseMe", function () {
     console.log("round at chose option: " + round);
 
     var userGuess = $($(this).children()[0]).text(); // gets the html text inside button
+
+    userChoices += userGuess + " ";
 
     console.log("answer: " + questionsLib[round].answer)
 
